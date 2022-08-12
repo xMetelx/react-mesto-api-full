@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const config = require('./utils/config');
 const { login, createUser } = require('./controllers/users');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const { userValidation } = require('./middlewares/validation');
 const NotFoundError = require('./utils/errors/NotFoundError');
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
 
 app.use(helmet());
 app.use(limiter);
+app.use(requestLogger);
 
 app.post('/signup', userValidation, createUser); // добавить валидацию - мидлвэр
 app.post('/signin', userValidation, login);
@@ -69,6 +71,8 @@ app.use(auth);
 
 app.use('/cards', cardRouter);
 app.use('/users', userRouter);
+
+app.use(errorLogger);
 
 app.use(errors());
 
