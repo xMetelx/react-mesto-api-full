@@ -1,0 +1,9 @@
+.header__burger-menu-button {
+  display: block;
+  background-color: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  align-self: center;
+  margin-right: 28px;
+}

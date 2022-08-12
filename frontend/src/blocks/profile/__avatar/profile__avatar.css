@@ -1,0 +1,24 @@
+.profile__avatar {
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  border: none;
+  position: relative;
+  background-color: #000;
+}
+
+.profile__avatar:hover::before {
+  background-image: url(../../../images/editAvatarPen.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #000;
+  border-radius: 50%;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .8;
+  position: absolute;
+  cursor: pointer;
+}

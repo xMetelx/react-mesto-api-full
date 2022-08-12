@@ -1,0 +1,7 @@
+.popup__box-for-picture {
+  position: relative;
+  margin: auto;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}

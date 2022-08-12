@@ -1,0 +1,7 @@
+.profile__photo {
+  background-size: cover;
+  background-position: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
