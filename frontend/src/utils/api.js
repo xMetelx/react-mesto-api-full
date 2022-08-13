@@ -40,7 +40,7 @@ class Api {
       })
     })
     .then(this._checkResponse)
-    }
+  }
 
   //отправляем свою карточку на сервер  
   postCard (name, link) {
@@ -56,12 +56,10 @@ class Api {
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    
     const setLike = {
       method: 'PUT',
       headers: this._headers
     }
-
     const deleteLike = {
       method: 'DELETE',
       headers: this._headers
@@ -69,7 +67,6 @@ class Api {
 
     return fetch(`${this._baseUrl + '/cards/likes'}/${cardId}`, isLiked ? deleteLike : setLike)
     .then(this._checkResponse)
-
   }
 
   // удаляем карточку
@@ -92,13 +89,12 @@ class Api {
     })
     .then(this._checkResponse)
   }
-
 }
 
 export default new Api ({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
+  baseUrl: 'https://api.metel.nomoredomains.sbs',
   headers: {
-    authorization: '0f69491b-0019-450c-bcd2-9a7eeaa1d51b',
-    'Content-Type': 'application/json'
+    'authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
   }
 })
