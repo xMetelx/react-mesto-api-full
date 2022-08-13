@@ -94,7 +94,7 @@ class Api {
 export default new Api ({
   baseUrl: 'https://api.metel.nomoredomains.sbs',
   headers: {
-    'authorization': `Bearer ${token}`,
+    'authorization': `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
   }
 })
