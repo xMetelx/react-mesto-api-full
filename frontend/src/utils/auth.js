@@ -45,5 +45,5 @@ class Auth {
   }
 }
 
-const auth = new Auth ('https://auth.nomoreparties.co')
+const auth = new Auth ('https://api.metel.nomoredomains.sbs')
 export default auth;

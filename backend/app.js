@@ -24,10 +24,10 @@ const limiter = rateLimit({
 });
 
 const allowedCors = [
-  'http://xmetelx.nomoredomains.sbs',
-  'https://xmetelx.nomoredomains.sbs',
-  'http://api.xmetelx.nomoredomains.sbs',
-  'https://api.xmetelx.nomoredomains.sbs',
+  'http://metel.nomoredomains.sbs',
+  'https://metel.nomoredomains.sbs',
+  'http://api.metel.nomoredomains.sbs',
+  'https://api.metel.nomoredomains.sbs',
 ];
 
 mongoose.connect(config.serverDb, {
