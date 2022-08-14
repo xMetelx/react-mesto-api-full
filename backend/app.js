@@ -49,13 +49,14 @@ mongoose.connect(config.serverDb, {
   // eslint-disable-next-line no-console
   .catch(() => console.log('Mongoose error'));
 
+app.use('*', cors(options));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('*', cors(options));
-
 app.use(helmet());
 app.use(limiter);
+
 app.use(requestLogger);
 
 app.post('/signup', userValidation, createUser); // добавить валидацию - мидлвэр
