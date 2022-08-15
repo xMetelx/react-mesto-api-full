@@ -30,6 +30,8 @@ const options = {
     'https://metel.nomoredomains.sbs',
     'http://api.metel.nomoredomains.sbs',
     'https://api.metel.nomoredomains.sbs',
+    'https://api.metel.nomoredomains.sbs/cards',
+    'https://api.metel.nomoredomains.sbs/users/me',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
   preflightContinue: false,
