@@ -24,22 +24,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-const options = {
-  origin: [
-    'http://metel.nomoredomains.sbs',
-    'https://metel.nomoredomains.sbs',
-    'http://api.metel.nomoredomains.sbs',
-    'https://api.metel.nomoredomains.sbs',
-    'https://api.metel.nomoredomains.sbs/cards',
-    'https://api.metel.nomoredomains.sbs/users/me',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
-};
-
 mongoose.connect(config.serverDb, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -55,6 +39,22 @@ app.use('*', cors(options));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const options = {
+  origin: [
+    'http://metel.nomoredomains.sbs',
+    'https://metel.nomoredomains.sbs',
+    'http://api.metel.nomoredomains.sbs',
+    'https://api.metel.nomoredomains.sbs',
+    'https://api.metel.nomoredomains.sbs/cards',
+    'https://api.metel.nomoredomains.sbs/users/me',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
 app.use(helmet());
 app.use(limiter);
