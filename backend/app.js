@@ -35,8 +35,6 @@ mongoose.connect(config.serverDb, {
   // eslint-disable-next-line no-console
   .catch(() => console.log('Mongoose error'));
 
-app.use('*', cors(options));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -55,6 +53,8 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
+
+app.use('*', cors(options));
 
 app.use(helmet());
 app.use(limiter);
