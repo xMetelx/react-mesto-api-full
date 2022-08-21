@@ -61,7 +61,7 @@ mongoose.connect(config.serverDb, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('*', cors(options));
+app.use(cors(options));
 
 // eslint-disable-next-line
 // app.use((req, res, next) => {
