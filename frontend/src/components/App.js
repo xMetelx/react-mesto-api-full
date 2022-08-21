@@ -50,13 +50,10 @@ function App () {
     return auth
       .signIn(email, password)
       .then((data) => {
-        if (data.token !== "undefined") {
-          localStorage.setItem('token', data.token);
-          setLoggedIn(true);
-          setUserData(email);
-          history.push('/')
-        }
-
+        localStorage.setItem('token', data.token);
+        setUserData(email);
+        setLoggedIn(true);
+        history.push('/')
       })
       .catch(() => {
         setLoggedIn(false)
@@ -66,35 +63,48 @@ function App () {
   }
 
   useEffect (() => {
-    api.getUserInfo ()
-      .then((data) => {
-        setCurrentUser(data)
-      })
-      .catch(err => console.log(err))
-    api.getCards ()
-      .then((data) => {
-
-        setCards(data)
-      })
-      .catch(err => console.log(err))
-  }, [])
-
-  useEffect (() => {
     const token = localStorage.getItem('token');
     if (token) {
       auth
         .checkToken(token)
           .then((data) => {
             setLoggedIn(true);
-            setUserData(data.data.email);
+            setUserData(data.email);
+            history.push('/');
           })
+          .catch(err => console.log(err))
     }
-  }, [])
+  }, [history])
 
-  useEffect(() => {
-    if (loggedIn) 
-      history.push('/')
-  }, [history, loggedIn])
+  useEffect (() => {
+    const token = localStorage.getItem('token');
+      if (token) {
+        Promise.all([api.getUserInfo(token), api.getCards(token)])
+          .then(([userData, cards]) => {
+            setCurrentUser(userData)
+            setCards(cards)
+          })
+          .catch(err => console.log(err))
+      }
+  }, [loggedIn])
+
+
+  // useEffect (() => {
+  //   api.getUserInfo()
+  //     .then((data) => setCurrentUser(data))
+  //     .catch(err => console.log(err))
+  //   api.getCards()
+  //     .then((data) => setCards(data))
+  //     .catch(err => console.log(err))
+  // }, 
+  // []);
+
+
+
+  // useEffect(() => {
+  //   if (loggedIn) 
+  //     history.push('/')
+  // }, [history, loggedIn])
 
   const onSignOut = () => {
     localStorage.removeItem('token');
@@ -165,6 +175,7 @@ function App () {
       .then((data) => {
         setCurrentUser(data)
         closeAllPopups()
+        console.log(data);
       })
       .catch(err => console.log(err));
   }
@@ -207,7 +218,7 @@ function App () {
             cards = {cards}
 
             component = {Main}
-          />
+          ></ProtectedRoute>
 
         </Switch>  
           

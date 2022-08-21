@@ -6,6 +6,5 @@
   .profile__intro {
     flex-direction: column;
     margin: auto;
-    align-items: center;
   }
 }

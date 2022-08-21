@@ -17,7 +17,7 @@ const Card = (props) => {
     props.delete(props.card)
   }
 
-  const isOwn = props.card.owner._id === currentUser._id;
+  const isOwn = props.card.owner === currentUser._id;
   
   // назначить кнопку удаления через className
   const cardDeleteButtonClassName = (

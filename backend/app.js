@@ -15,7 +15,7 @@ const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -23,6 +23,29 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+// const allowedCors = [
+//   'http://metel.nomoredomains.sbs',
+//   'https://metel.nomoredomains.sbs',
+//   'http://api.metel.nomoredomains.sbs',
+//   'https://api.metel.nomoredomains.sbs',
+// ];
+
+const options = {
+  origin: [
+    'http://metel.nomoredomains.sbs',
+    'https://metel.nomoredomains.sbs',
+    'http://api.metel.nomoredomains.sbs',
+    'https://api.metel.nomoredomains.sbs',
+    'http://localhost:3001',
+    'http://localhost:3000',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
 mongoose.connect(config.serverDb, {
   useNewUrlParser: true,
@@ -38,27 +61,26 @@ mongoose.connect(config.serverDb, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const options = {
-  origin: [
-    'http://metel.nomoredomains.sbs',
-    'https://metel.nomoredomains.sbs',
-    'http://api.metel.nomoredomains.sbs',
-    'https://api.metel.nomoredomains.sbs',
-    'https://api.metel.nomoredomains.sbs/cards',
-    'https://api.metel.nomoredomains.sbs/users/me',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
-};
-
 app.use('*', cors(options));
+
+// eslint-disable-next-line
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
+//   const { method } = req;
+//   const requestHeaders = req.headers['access-control-request-headers'];
+//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//   } else if (method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//     res.header('Access-Control-Allow-Headers', requestHeaders);
+//     return res.end();
+//   }
+//   next();
+// });
 
 app.use(helmet());
 app.use(limiter);
-
 app.use(requestLogger);
 
 app.post('/signup', userValidation, createUser); // добавить валидацию - мидлвэр

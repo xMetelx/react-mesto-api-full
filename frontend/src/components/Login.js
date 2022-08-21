@@ -24,7 +24,6 @@ function Login ({onLogin}) {
     if (!email || !password) {
       console.log("not mail, not pass");
     }
-
     else {
       onLogin({email, password})
         .then(resetForm)

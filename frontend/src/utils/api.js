@@ -1,7 +1,7 @@
 class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
-    this._headers = headers
+    // this._headers = headers
   }
 
   _checkResponse(res) {
@@ -15,7 +15,10 @@ class Api {
   getUserInfo () {
     return fetch(this._baseUrl + '/users/me', {
       method: 'GET',
-      headers: this._headers
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
     })
       .then(this._checkResponse) 
   }
@@ -24,7 +27,10 @@ class Api {
   getCards () {
     return fetch(this._baseUrl + '/cards', {
       method: 'GET',
-      headers: this._headers
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
     })
       .then(this._checkResponse)
   }
@@ -33,20 +39,26 @@ class Api {
   patchProfile (name, about) {
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: name, 
         about: about
       })
     })
     .then(this._checkResponse)
-  }
+    }
 
   //отправляем свою карточку на сервер  
   postCard (name, link) {
     return fetch(this._baseUrl + '/cards', {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: name,
         link: link
@@ -58,14 +70,19 @@ class Api {
   changeLikeCardStatus(cardId, isLiked) {
     const setLike = {
       method: 'PUT',
-      headers: this._headers
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
     }
     const deleteLike = {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
     }
-
-    return fetch(`${this._baseUrl + '/cards/likes'}/${cardId}`, isLiked ? deleteLike : setLike)
+    return fetch(`${this._baseUrl + '/cards/'}${cardId}${'/likes'}`, isLiked ? deleteLike : setLike)
     .then(this._checkResponse)
   }
 
@@ -73,7 +90,10 @@ class Api {
   removeCard (cardId) {
     return fetch (`${this._baseUrl + '/cards'}/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
     })
     .then (this._checkResponse)
   }
@@ -82,19 +102,19 @@ class Api {
   patchAvatar (avatar) {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         avatar: avatar
       })
     })
     .then(this._checkResponse)
   }
+
 }
 
 export default new Api ({
   baseUrl: 'https://api.metel.nomoredomains.sbs',
-  headers: {
-    'authorization': `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json',
-  }
 })

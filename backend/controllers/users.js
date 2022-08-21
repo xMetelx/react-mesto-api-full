@@ -20,7 +20,7 @@ module.exports.getUserById = (req, res, next) => {
   User.findById(id)
     .orFail(new Error('NotFoundErr'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
     })
     .catch((err) => {
       if (err.message === 'NotFoundErr') {
@@ -37,7 +37,13 @@ module.exports.getMyProfile = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new Error('NotFoundErr'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send({
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        _id: user._id,
+        email: user.email,
+      });
     })
     .catch((err) => {
       if (err.message === 'NotFoundErr') {
@@ -106,7 +112,7 @@ module.exports.patchProfile = (req, res, next) => {
       if (!user) {
         throw NotFoundError('Пользователь с указанным _id не найден');
       }
-      res.status(200).send({ data: user });
+      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -124,7 +130,7 @@ module.exports.patchAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       }
-      res.status(200).send({ data: user });
+      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

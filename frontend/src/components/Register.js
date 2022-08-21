@@ -33,7 +33,7 @@ function Register ({onRegister}) {
 
   return (
     <div className="auth">
-      <h1 className="auth__title">Регистрация</h1>
+    <h1 className="auth__title">Регистрация</h1>
     <form className="auth__form" onSubmit={handleSubmit}>
     
       <input className="auth__input" value={email} onChange={onChangeEmail} name="email" required  id="input-email" type="email" minLength="7" maxLength="40" placeholder="Email" />
