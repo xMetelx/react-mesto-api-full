@@ -14,7 +14,10 @@ class Auth {
     console.log(email, password);
     return fetch(this._baseUrl + '/signup', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
       body: JSON.stringify({
         email: email, 
         password: password})
@@ -25,7 +28,10 @@ class Auth {
   signIn (email, password) {
     return fetch(this._baseUrl + '/signin', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({
         email: email, 
         password: password})
