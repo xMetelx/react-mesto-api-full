@@ -61,7 +61,20 @@ mongoose.connect(config.serverDb, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors(options));
+app.use(cors({
+  origin: [
+    'http://api.metel.nomoredomains.sbs',
+    'https://api.metel.nomoredomains.sbs',
+    'http://metel.nomoredomains.sbs',
+    'https://metel.nomoredomains.sbs',
+
+    'http://localhost:3001',
+    'http://localhost:3000',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 // eslint-disable-next-line
 // app.use((req, res, next) => {
