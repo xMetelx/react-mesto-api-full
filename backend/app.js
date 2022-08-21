@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const cors = require('cors');
+// const cors = require('cors');
 const config = require('./utils/config');
 const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -24,12 +24,12 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// const allowedCors = [
-//   'http://metel.nomoredomains.sbs',
-//   'https://metel.nomoredomains.sbs',
-//   // 'http://api.metel.nomoredomains.sbs',
-//   // 'https://api.metel.nomoredomains.sbs',
-// ];
+const allowedCors = [
+  'http://metel.nomoredomains.sbs',
+  'https://metel.nomoredomains.sbs',
+  // 'http://api.metel.nomoredomains.sbs',
+  // 'https://api.metel.nomoredomains.sbs',
+];
 
 // const options = {
 //   origin: [
@@ -61,38 +61,38 @@ mongoose.connect(config.serverDb, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors({
-  credentials: true,
-  origin: [
-    'http://api.metel.nomoredomains.sbs',
-    'https://api.metel.nomoredomains.sbs',
-    'http://metel.nomoredomains.sbs',
-    'https://metel.nomoredomains.sbs',
+// app.use(cors({
+//   credentials: true,
+//   origin: [
+//     'http://api.metel.nomoredomains.sbs',
+//     'https://api.metel.nomoredomains.sbs',
+//     'http://metel.nomoredomains.sbs',
+//     'https://metel.nomoredomains.sbs',
 
-    'http://localhost:3001',
-    'http://localhost:3000',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+//     'http://localhost:3001',
+//     'http://localhost:3000',
+//   ],
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
 
 // eslint-disable-next-line
-// app.use((req, res, next) => {
-//   const { origin } = req.headers;
-//   const { method } = req;
-//   const requestHeaders = req.headers['access-control-request-headers'];
-//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-//   if(allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//     res.header('Access-Control-Allow-Credentials', true);
-//   } else if (method === 'OPTIONS') {
-//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-//     res.header('Access-Control-Allow-Headers', requestHeaders);
-//     res.end();
-//     return;
-//   }
-//   next();
-// });
+app.use((req, res, next) => {
+  const { origin } = req.headers;
+  const { method } = req;
+  const requestHeaders = res.header('Access-Control-Allow-Headers', 'Content-Type,Accept, content-type');
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+  if(allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', true);
+  } else if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+    res.end();
+    return;
+  }
+  next();
+});
 
 app.use(helmet());
 app.use(limiter);
