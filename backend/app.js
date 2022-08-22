@@ -24,17 +24,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-const options = {
-  origin: [
-    'http://localhost:3000',
-    'http://metel.nomoredomains.sbs',
-    'https://metel.nomoredomains.sbs',
-  ],
-  allowedHeaders: ['Content-Type', 'origin'],
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  preflightContinue: false,
-  credentials: true,
-};
+// const options = {
+//   origin: [
+//     'http://localhost:3000',
+//     'http://metel.nomoredomains.sbs',
+//     'https://metel.nomoredomains.sbs',
+//   ],
+//   allowedHeaders: ['Content-Type', 'origin'],
+//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+//   preflightContinue: false,
+//   credentials: true,
+// };
 
 mongoose.connect(config.serverDb, {
   useNewUrlParser: true,
@@ -50,7 +50,9 @@ mongoose.connect(config.serverDb, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors(options));
+// app.use(cors(options));
+
+app.options('*', cors());
 
 app.use(helmet());
 app.use(limiter);
