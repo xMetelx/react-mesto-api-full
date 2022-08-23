@@ -56,11 +56,11 @@ app.use(helmet());
 app.use(limiter);
 app.use(requestLogger);
 
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signup', userValidation, createUser); // добавить валидацию - мидлвэр
 app.post('/signin', userValidation, login);
