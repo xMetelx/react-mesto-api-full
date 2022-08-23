@@ -196,11 +196,11 @@ function App () {
 
         <Switch>
 
-          <Route path = "/sign-up">
+          <Route path = "/signup">
             <Register onRegister = {onRegister} />
           </Route>
           
-          <Route path = "/sign-in"> 
+          <Route path = "/signin"> 
             <Login onLogin={onLogin} />
           </Route>
 
