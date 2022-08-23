@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const cors = require('cors');
+// const cors = require('cors');
 const config = require('./utils/config');
 const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -47,7 +47,7 @@ mongoose.connect(config.serverDb, {
   // eslint-disable-next-line no-console
   .catch(() => console.log('Mongoose error'));
 
-app.use(cors);
+// app.use(cors);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
