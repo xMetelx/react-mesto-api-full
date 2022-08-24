@@ -25,7 +25,7 @@ const Card = (props) => {
   )
 
   // определить наличие лайка 
-  const isLiked = props.card.likes.some(card => card._id === currentUser._id)
+  const isLiked = props.card.likes.some(card => card === currentUser._id)
 
   // назначить статус кнопки лайка
   const cardLikeButtonClassName = `element__button ${isLiked ? 'element__button-like_status_active' : ''}`
