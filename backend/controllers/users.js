@@ -18,14 +18,12 @@ module.exports.getUsers = (req, res, next) => {
 module.exports.getUserById = (req, res, next) => {
   const id = req.params.userId;
   User.findById(id)
-    .orFail(new Error('NotFoundErr'))
+    .orFail(new Error('Пользователь с указанным _id не найден'))
     .then((user) => {
-      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
+      res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.message === 'NotFoundErr') {
-        next(new NotFoundError('Пользователь с указанным _id не найден'));
-      } else if (err.name === 'CastError') {
+      if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные при запросе пользователя'));
       } else {
         next(err);
@@ -35,34 +33,15 @@ module.exports.getUserById = (req, res, next) => {
 
 module.exports.getMyProfile = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new Error('NotFoundErr'))
+    .orFail(new Error('Пользователь с указанным _id не найден'))
     .then((user) => {
-      res.status(200).send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        _id: user._id,
-        email: user.email,
-      });
+      res.status(200).send(user);
     })
-    .catch((err) => {
-      if (err.message === 'NotFoundErr') {
-        next(new NotFoundError('Пользователь с указанным _id не найден'));
-      } else {
-        (next(err));
-      }
-    });
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {
-  const {
-    email,
-    password,
-  } = req.body;
-  if (!email || !password) {
-    throw new BadRequestError('Email или пароль не переданы');
-  }
-
+  const { email } = req.body;
   const hash = bcrypt.hashSync(req.body.password, 10);
 
   User.findOne({ email })
@@ -86,6 +65,7 @@ module.exports.createUser = (req, res, next) => {
         .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new BadRequestError('Переданы некорректные данные при регистрации пользователя'));
+            return;
           }
           next(err);
         });
@@ -112,11 +92,12 @@ module.exports.patchProfile = (req, res, next) => {
       if (!user) {
         throw NotFoundError('Пользователь с указанным _id не найден');
       }
-      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
+        return;
       }
       next(err);
     });
@@ -130,11 +111,12 @@ module.exports.patchAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       }
-      res.status(200).send({ name: user.name, about: user.about, avatar: user.avatar });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
+        return;
       }
       next(err);
     });

@@ -37,7 +37,7 @@ function Register ({onRegister}) {
     <form className="auth__form" onSubmit={handleSubmit}>
     
       <input className="auth__input" value={email} onChange={onChangeEmail} name="email" required  id="input-email" type="email" minLength="7" maxLength="40" placeholder="Email" />
-      <input className="auth__input" value={password} onChange={onChangePassword} name="password" required  id="input-password" type="password" minLength="5" maxLength="40" placeholder="Пароль" />
+      <input className="auth__input" value={password} onChange={onChangePassword} name="password" required  id="input-password" type="password" placeholder="Пароль" />
       <button className="auth__button" type="submit" >Зарегистрироваться</button>
     </form>
       <div className='auth__change'>

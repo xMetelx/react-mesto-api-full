@@ -36,7 +36,7 @@ return (
   <h1 className="auth__title">Вход</h1>
   <form onSubmit={handleSubmit} className="auth__form">
     <input className="auth__input" onChange={onChangeEmail} required value={email} id="input-email" name="email" type="email" minLength="7" maxLength="40" placeholder="Email" />
-    <input className="auth__input" onChange={onChangePassword} required value={password} id="input-password" name="password" type="password" minLength="8" maxLength="40" placeholder="Пароль" />
+    <input className="auth__input" onChange={onChangePassword} required value={password} id="input-password" name="password" type="password" placeholder="Пароль" />
     <button className="auth__button" type="submit" >Войти</button>
     </form>
   </div>  
