@@ -50,7 +50,7 @@ module.exports.deleteCard = (req, res, next) => Card.findById(req.params.cardId)
   });
 
 module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
-  { _id: req.params.cardId },
+  req.params.cardId,
   { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
   { new: true },
 )
