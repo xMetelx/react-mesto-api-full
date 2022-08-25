@@ -6,7 +6,7 @@ const ForbiddenError = require('../utils/errors/ForbiddenError'); //  403 - не
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      res.status(200).send(cards);
+      res.status(200).send(cards.reverse());
     })
     .catch(next);
 };

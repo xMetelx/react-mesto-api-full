@@ -108,6 +108,8 @@ function App () {
 
   const onSignOut = () => {
     localStorage.removeItem('token');
+    setUserData("");
+    setLoggedIn(false);
     history.push('/sign-in');
   }  
 
