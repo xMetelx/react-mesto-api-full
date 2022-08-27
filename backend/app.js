@@ -16,7 +16,7 @@ const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
 const app = express();
-const { PORT } = process.env;
+const { PORT } = process.env || 3001;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -43,9 +43,7 @@ mongoose.connect(config.serverDb, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 })
-  // eslint-disable-next-line no-console
   .then(() => console.log('Mongo is ON'))
-  // eslint-disable-next-line no-console
   .catch(() => console.log('Mongoose error'));
 
 app.use(cors(options));
@@ -91,6 +89,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  // eslint-disable-next-line
   console.log(`Приложение запущено на ${PORT} порте`);
 });

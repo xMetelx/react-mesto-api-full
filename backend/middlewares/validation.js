@@ -1,11 +1,13 @@
 const { celebrate, Joi } = require('celebrate');
 
+/* eslint prefer-regex-literals: "error" */
+const testExpression = /^( http|https):\/\/(www\.)?([a-z0-9._])+([\w+\-\-._~:/?#[\]!$&’()*+,;=-])+(#?)/;
+
 const userValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    // eslint-disable-next-line no-useless-escape
-    avatar: Joi.string().regex(/^( http|https):\/\/(www\.)?([a-z0-9\._])+([\w+\-\-._~:/?#\[\]!$&’()*+,;=-])+(#?)/).messages({
+    avatar: Joi.string().regex(testExpression).messages({
       'string.base': 'Введите URL',
     }),
     email: Joi.string().email().required().messages({
@@ -41,12 +43,9 @@ const profileValidation = celebrate({
   }),
 });
 
-// ^( http|https):\/\/(www\.)?([a-z0-9\._])+([\w+\-\-._~:/?#\[\]!$&’()*+,;=-])+(#?)    добавить
-
 const avatarValidation = celebrate({
   body: Joi.object().keys({
-    // eslint-disable-next-line no-useless-escape
-    avatar: Joi.string().required().regex(/^( http|https):\/\/(www\.)?([a-z0-9\._])+([\w+\-\-._~:/?#\[\]!$&’()*+,;=-])+(#?)/).messages({
+    avatar: Joi.string().required().regex(testExpression).messages({
       'string.base': 'Введите URL',
     }),
   }),
@@ -56,7 +55,7 @@ const cardValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     // eslint-disable-next-line no-useless-escape
-    link: Joi.string().required().regex(/^( http|https):\/\/(www\.)?([a-z0-9\._])+([\w+\-\-._~:/?#\[\]!$&’()*+,;=-])+(#?)/).messages({
+    link: Joi.string().required().regex(testExpression).messages({
       'string.base': 'Введите URL',
     }),
   }),
