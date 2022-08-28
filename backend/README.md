@@ -31,4 +31,4 @@
 
 https://metel.nomoredomains.sbs/
 
-Публичный IP: 51.270.70.202
+Публичный IP сервера: http://51.270.70.202
