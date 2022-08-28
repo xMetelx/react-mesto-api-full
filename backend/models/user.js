@@ -4,7 +4,6 @@ const isEmail = require('validator/lib/isEmail');
 
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 
-/* eslint prefer-regex-literals: "error" */
 const regex = /^( http|https):\/\/(www\.)?([a-z0-9._])+([\w+\-\-._~:/?#[\]!$&’()*+,;=-])+(#?)/;
 
 const userSchema = new mongoose.Schema({

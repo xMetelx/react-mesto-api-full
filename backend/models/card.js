@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-/* eslint prefer-regex-literals: "error" */
 const regex = /^( http|https):\/\/(www\.)?([a-z0-9._])+([\w+\-\-._~:/?#[\]!$&’()*+,;=-])+(#?)/;
 
 const cardSchema = new mongoose.Schema({
