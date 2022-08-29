@@ -16,7 +16,7 @@ const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
 const app = express();
-const { PORT } = process.env || 3001;
+const { PORT = 3001 } = process.env;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
